@@ -1,0 +1,273 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html,
+body {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  place-items: center;
+  background: #f2f2f2;
+}
+
+::selection {
+  background: #4158d0;
+  color: #fff;
+}
+
+
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .popup .popuptext {
+    visibility: hidden;
+    background: linear-gradient(-135deg, #0c0c0bef, #2d2d2b);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+  }
+  .popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  .popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+  }
+
+  @-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+  }
+  
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  .wrapper {
+    width: 380px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .wrapper .title {
+    font-size: 35px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 100px;
+    color: #fff;
+    user-select: none;
+    border-radius: 15px 15px 0 0;
+    background: linear-gradient(-135deg, #0c0c0bef, #52524d);
+  }
+  
+  .wrapper form {
+    padding: 10px 30px 50px 30px;
+  }
+  
+  .wrapper form .field {
+    height: 50px;
+    width: 100%;
+    margin-top: 20px;
+    position: relative;
+  }
+  
+  .wrapper form .field input,
+  .wrapper form .field select {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    font-size: 17px;
+    padding-left: 20px;
+    border: 1px solid lightgrey;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+  }
+  
+  .wrapper form .field input:focus,
+  .wrapper form .field input:valid,
+  .wrapper form .field select:focus {
+    border-color: #4158d0;
+  }
+  
+  .wrapper form .field label {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    color: #999999;
+    font-weight: 400;
+    font-size: 17px;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+  }
+  
+  .wrapper form .field input:focus~label,
+  .wrapper form .field input:valid~label,
+  .wrapper form .field select:focus~label {
+    top: 0%;
+    font-size: 16px;
+    color: #4158d0;
+    background: #fff;
+    transform: translateY(-50%);
+  }
+  
+  .wrapper form .field input[type="button"] {
+    color: #fff;
+    border: none;
+    padding-left: 0;
+    margin-top: -10px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    background: linear-gradient(-135deg, #0c0c0bef, #52524d);
+    transition: all 0.3s ease;
+  }
+  
+  .wrapper form .field input[type="button"]:active {
+    transform: scale(0.95);
+  }
+  
+  .wrapper form .signup-link {
+    color: #262626;
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .wrapper form .pass-link a,
+  .wrapper form .signup-link a {
+    color: #4158d0;
+    text-decoration: none;
+  }
+  
+  .wrapper form .pass-link a:hover,
+  .wrapper form .signup-link a:hover {
+    text-decoration: underline;
+  }
+  .field {
+    position: relative;
+}
+
+.tooltip {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px; 
+}
+
+.tooltip i {
+    margin-left: 5px; 
+    color : grey;
+}
+
+.tooltip:hover {
+    color: #4158d0; 
+}
+
+  .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 800px;
+      height: 40%; /* Adjust the max-width as needed */
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+      text-align: center;
+    }
+    
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    
+    .placeholder {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      color: #999999;
+      font-weight: 400;
+      font-size: 17px;
+      pointer-events: none;
+      transform: translateY(-50%);
+      transition: all 0.3s ease;
+    }
+    
+    .placeholder.hidden {
+      display: none;
+    }
+    #gross_income{
+      outline : 0;
+      border-color: #52524d;
+
+    }
+  
+
+
+
+
+  input[type = number]::-webkit-inner-spin-button,
+  input[type = number]::-webkit-inner-spin-button{
+    -webkit-appearance :none;
+    margin:0;
+  }
+
+
+.field label {
+  overflow: hidden;
+}
+
+
+
+
+    
+
+

@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title>Tax Calculator | Flye</title>
+<link rel="stylesheet" href="style.css">
+<!--link to add question mark icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
+</head>
+<body>
+  <div class="wrapper">
+    <div class="title">
+      Tax Calculator
+
+    </div>
+  
+    <form id="taxForm">
+  
+      <div class="field">
+        <!--All the required label with question mark icon to display the required messages-->
+        <label for="gross_income" class="placeholder">Enter gross annual income:</label>
+        <input type="number" id="gross_income" required">
+        <span class="tooltip popup" onmouseover="showPopup('tooltip1')" onmouseout="hidePopup('tooltip1')">
+          <i class="fas fa-question-circle"></i>
+          <span class="popuptext" id="tooltip1">Gross annual income is your total salary.</span>
+        </span>
+      </div>
+      <div class="field">
+        <label for="extra_income" class="placeholder">Enter extra income:</label>
+        <input type="number" id="extra_income" required>
+        <span class="tooltip popup" onmouseover="showPopup('tooltip2')" onmouseout="hidePopup('tooltip2')">
+          <i class="fas fa-question-circle"></i>
+          <span class="popuptext" id="tooltip2">Extra income is any additional income you receive apart from your regular salary.</span>
+        </span>
+      </div>
+      
+      <div class="field">
+        <label for="age_group" class="placeholder" value = "Select age group">Select age group:</label>
+        <select id="age_group" required>
+          <option value = ""></option>
+          <option value="<40" >&lt;40</option>
+          <option value="≥40 & <60">≥40 &lt;60</option>
+          <option value="≥60">≥60</option>
+        </select>
+      </div>
+      
+      <div class="field">
+        <label for="total_deduction" class="placeholder">Enter total applicable deduction:</label>
+        <input type="number" id="total_deduction" required>
+        <span class="tooltip popup" onmouseover="showPopup('tooltip3')" onmouseout="hidePopup('tooltip3')">
+          <i class="fas fa-question-circle"></i>
+          <span class="popuptext" id="tooltip3">Total applicable deduction is the total amount that can be subtracted from your income before calculating taxes.</span>
+        </span>
+        <span class="error_icon" id="error_total_deduction" onmouseover="showErrorMessage('error_total_deduction', 'Please enter numbers only')" onmouseout="hideErrorMessage('error_total_deduction')">
+          <span class="popuptext"></span>
+        </span>
+      </div>
+      
+      <div class="field">
+        <!--On clicking the button calculate tax,the CalculateTax function will be called-->
+        <input type="button" value="Calculate Tax" id="calculate_tax_button" onclick="CalculateTax()">
+      </div>
+      
+    </form>
+  </div>
+  <!-- Modal for displaying tax result -->
+  <div id="taxResultModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="taxResultContainer"></div>
+    </div>
+  </div>
+
+  <script>
+    // fucntion for visibility of popup message
+    function showPopup(messageId) {
+      var popup = document.getElementById(messageId);
+      popup.classList.add("show");
+    }
+   //function for hiding popup message
+    function hidePopup(messageId) {
+      var popup = document.getElementById(messageId);
+      popup.classList.remove("show");
+    }
+
+    
+    // Placeholder behavior
+    function handlePlaceholder(fieldId) {
+      var inputField = document.getElementById(fieldId);
+      var label = inputField.previousElementSibling;
+      inputField.addEventListener('focus', function() {
+        label.classList.add('hidden');
+      });
+      inputField.addEventListener('blur', function() {
+        if (inputField.value === '') {
+          label.classList.remove('hidden');
+        }
+      });
+    }
+
+    // Calling the fucntion handlePlaceholder for each input field
+    handlePlaceholder('gross_income');
+    handlePlaceholder('extra_income');
+    handlePlaceholder('age_group');
+    handlePlaceholder('total_deduction');
+
+    // Function to validate inputs and calculate tax
+    function CalculateTax() {
+    
+
+      // taking the input values from labels
+      var grossIncome = parseFloat(document.getElementById('gross_income').value);
+      var extraIncome = parseFloat(document.getElementById('extra_income').value);
+      var ageGroup = document.getElementById('age_group').value;
+      var totalDeduction = parseFloat(document.getElementById('total_deduction').value);
+      
+
+        // Calculating overall income after deductions:
+        var overallIncome = grossIncome + extraIncome - totalDeduction;
+
+        // Calculating  tax based on age group and overall income as mentioned in the assignment:
+        var tax = 0;
+        if (overallIncome > 800000) {
+          switch (ageGroup) {
+            case '<40':
+              tax = (overallIncome - 800000) * 0.3;
+              break;
+            case '≥40 & <60':
+              tax = (overallIncome - 800000) * 0.4;
+              break;
+            case '≥60':
+              tax = (overallIncome - 800000) * 0.1;
+              break;
+            default:
+              break;
+          }
+      
+
+        // Calculating  income after tax deduction
+        var incomeAfterTax = overallIncome - tax;
+
+        // Showing the final tax result in modal
+        displayTaxResultModal(overallIncome, tax, incomeAfterTax);
+
+        // Removing  the tax form after getting the result
+        document.getElementById('taxForm').remove();
+      }
+    }
+
+
+    // Function to display tax result in a modal
+    function displayTaxResultModal(overallIncome, tax, incomeAfterTax) {
+      var modal = document.getElementById('taxResultModal');
+      var modalContent = modal.getElementsByClassName('modal-content')[0];
+      modalContent.innerHTML = '<span class="close">&times;</span><h2>Overall Income</h2><p>' + overallIncome.toFixed(2) + ' Lakhs</p><h2>Tax</h2><p>' + tax.toFixed(2) + ' Lakhs</p><h2>Income after tax deduction</h2><p>' + incomeAfterTax.toFixed(2) + ' Lakhs</p>';
+      modal.style.display = 'block';
+
+      // Close the modal when the close button is clicked
+      var closeButton = modalContent.getElementsByClassName('close')[0];
+      closeButton.onclick = function() {
+        modal.style.display = 'none';
+      }
+
+      // Close the modal when clicking outside of it()
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = 'none';
+        }
+      }
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
