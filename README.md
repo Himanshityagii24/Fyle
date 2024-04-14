@@ -7,8 +7,8 @@ It has following features:
 <img src = "question mark.png">
 After filling the values , the final result is being displayed:
 <img src = "result modal.png">
-Open https://himanshityagii24.github.io/Fyle/ with your browser to see the result.
-git clone using the link : https://github.com/Himanshityagii24/Fyle.git
+Open https://himanshityagii24.github.io/Fyle/ with your browser to see the result.<br>
+Git clone using the link : https://github.com/Himanshityagii24/Fyle.git
  <h1>
  Framework Used:
  </h1>
